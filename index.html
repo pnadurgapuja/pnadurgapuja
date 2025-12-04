@@ -1,132 +1,736 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PANDAV</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>PANDAV - 20 Menus</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent1:#07a5ff; --accent2:#11e3b3; --muted:#e9f1ff; --card:#fff; --text:#222;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:#f4f8ff;overflow:hidden}
+.page{
+  position:absolute; top:0; left:0; width:100%; height:100%;
+  padding-top:70px; background:var(--card); display:none; overflow:auto;
+}
+.page:target{display:block}
+/* show home if no hash */
+body:not(:target) #home { display:block; }
 
-    <!-- CSS File -->
-    <link rel="stylesheet" href="style.css">
-	
- <!-- Ionicons --> 	
- <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
- <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>   
+.top-bar{
+  position:fixed; top:0; left:0; width:100%; height:60px;
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
+  display:flex; align-items:center; padding:0 12px; color:#fff; z-index:999;
+}
+.top-bar .back{ font-size:28px; font-weight:700; color:white; text-decoration:none; margin-right:12px; }
+.top-bar .title{ font-size:18px; font-weight:600; }
+.top-bar .info{ margin-left:auto; font-size:20px; }
+
+.search-box{ width:94%; margin:14px auto; position:relative; }
+#searchInput{
+  width:100%; padding:12px 16px 12px 44px; border-radius:10px; border:1px solid #bbb; font-size:15px;
+  background-image:url('https://cdn-icons-png.flaticon.com/128/622/622669.png');
+  background-size:20px; background-position:12px center; background-repeat:no-repeat;
+}
+.clear-btn{ position:absolute; right:10px; top:50%; transform:translateY(-50%); font-size:20px; cursor:pointer; display:none; color:#666; padding:2px 6px; }
+
+.jd-menu{
+  display:grid; grid-template-columns:repeat(5,1fr); gap:12px; padding:10px 12px 40px;
+}
+.jd-item{
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  background:var(--card); padding:12px; border-radius:12px; text-decoration:none; color:var(--text);
+  box-shadow:0 8px 20px rgba(16,24,40,0.05); transition:transform .18s, box-shadow .18s;
+}
+.jd-item:hover{ transform:translateY(-6px); box-shadow:0 16px 30px rgba(16,24,40,0.08); }
+.jd-icon{ width:56px; height:56px; border-radius:50%; background:var(--muted); display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.jd-icon img{ width:60%; height:60%; object-fit:contain; }
+.jd-title{ font-size:13px; font-weight:700; text-align:center; }
+
+/* Em grid and sub-grid */
+.em-grid, .sub-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; padding:12px; }
+.em-item, .sub-item{
+  background:var(--muted); padding:14px; border-radius:10px; font-weight:700; text-align:center; text-decoration:none; color:var(--text);
+}
+.sub-item{ background:var(--card); box-shadow:0 8px 20px rgba(16,24,40,0.05); cursor:pointer; }
+
+/* responsive */
+@media (max-width:1100px){ .jd-menu{ grid-template-columns:repeat(4,1fr); } }
+@media (max-width:800px){ .jd-menu{ grid-template-columns:repeat(3,1fr); } .em-grid,.sub-grid{ grid-template-columns:1fr; } }
+@media (max-width:420px){ .jd-title{ font-size:12px } .top-bar .title{ font-size:16px } }
+
+/* small utilities */
+.center-note{ padding:18px; text-align:center; color:#555; font-weight:600; }
+.link-like{ text-decoration:none; color:inherit; display:block; }
+</style>
 </head>
-
 <body>
 
-    <!-- ===== Page Loader ===== -->
-<div id="loaderScreen">
-  <div class="loader-box">
-    <div class="loader-ring"></div>
-    <div class="loader-img">
-      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgTQyAMu_Kqp1JKPTOmUdO6XhFTNizDAfPpgLcURGZNbbBLTb-cJCqg-pYdwWQ8pubv3MFd5DlBwkBTOEbVcAfdu3KH23ByuXrj-nfwKyHR_-R0qV8aTsknQm4854JqBsYtzsImnEDIukCg64m918zY1V7zZgQZLoWbmdUPExVWHqcZEceIQFTKpJLIf5w8/s1600/PANDAV2.jpg">
-    </div>
+<!-- ================= HOME PAGE ================= -->
+<div id="home" class="page">
+  <div class="top-bar">
+    <div class="title">PANDAV</div>
+    <div class="info">ℹ</div>
+  </div>
+
+  <div class="search-box">
+    <input id="searchInput" type="search" placeholder="Search menus...">
+    <span id="clearBtn" class="clear-btn">×</span>
+  </div>
+
+  <div id="menuList" class="jd-menu">
+    <!-- 20 main menus -->
+    <a href="#emergency" class="jd-item" data-name="emergency ambulance fire police hospital">
+      <div class="jd-icon"><img src="https://i.pinimg.com/736x/dd/31/c0/dd31c004ebdc746f34775bbd5cf184ac.jpg" alt=""></div>
+      <div class="jd-title">Emergency</div>
+    </a>
+
+    <a href="#dr_and_drugs" class="jd-item" data-name="doctor drugs pharmacy clinic bloodbank medicine">
+      <div class="jd-icon"><img src="https://cdn-icons-png.flaticon.com/512/2966/2966481.png" alt=""></div>
+      <div class="jd-title">Dr. & Drugs</div>
+    </a>
+
+    <a href="#home_service" class="jd-item" data-name="home service plumber electrician cleaning appliance repair">
+      <div class="jd-icon"><img src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png" alt=""></div>
+      <div class="jd-title">Home Service</div>
+    </a>
+
+    <a href="#find_my_shop" class="jd-item" data-name="find my shop shops local store market">
+      <div class="jd-icon"><img src="https://cdn-icons-png.flaticon.com/512/3031/3031224.png" alt=""></div>
+      <div class="jd-title">Find My Shop</div>
+    </a>
+
+    <a href="#beauty" class="jd-item" data-name="beauty salon parlour makeup spa">
+      <div class="jd-icon"><img src="https://cdn-icons-png.flaticon.com/512/2972/2972149.png" alt=""></div>
+      <div class="jd-title">Beauty</div>
+    </a>
+
+    <a href="#automobile" class="jd-item" data-name="automobile car bike garage showroom service">
+      <div class="jd-icon"><img src="https://cdn-icons-png.flaticon.com/512/743/743131.png" alt=""></div>
+      <div class="jd-title">Automobile</div>
+    </a>
+
+    <a href="#appliances" class="jd-item" data-name="appliances refrigerator washing machine ac tv">
+      <div class="jd-icon"><img src="https://cdn-icons-png.flaticon.com/512/2972/2972158.png" alt=""></div>
+      <div class="jd-title">Appliances</div>
+    </a>
+
+    <a href="#food" class="jd-item" data-name="food restaurant cafe delivery takeaway">
+      <div class="jd-icon"><img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" alt=""></div>
+      <div class="jd-title">Food</div>
+    </a>
+
+    <a href="#education" class="jd-item" data-name="education school college tuition coaching">
+      <div class="jd-icon"><img src="https://cdn-icons-png.flaticon.com/512/2913/2913461.png" alt=""></div>
+      <div class="jd-title">Education</div>
+    </a>
+
+    <a href="#business" class="jd-item" data-name="business services b2b companies">
+      <div class="jd-icon"><img src="https://cdn-icons-png.flaticon.com/512/2838/2838897.png" alt=""></div>
+      <div class="jd-title">Business</div>
+    </a>
+
+    <a href="#electronics" class="jd-item" data-name="electronics mobile laptop accessories">
+      <div class="jd-icon"><img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt=""></div>
+      <div class="jd-title">Electronics</div>
+    </a>
+
+    <a href="#travel" class="jd-item" data-name="travel ticket hotel flight tour">
+      <div class="jd-icon"><img src="https://cdn-icons-png.flaticon.com/512/201/201623.png" alt=""></div>
+      <div class="jd-title">Travel</div>
+    </a>
+
+    <a href="#finance" class="jd-item" data-name="finance bank loan insurance investment">
+      <div class="jd-icon"><img src="https://cdn-icons-png.flaticon.com/512/3103/3103446.png" alt=""></div>
+      <div class="jd-title">Finance</div>
+    </a>
+
+    <a href="#construction" class="jd-item" data-name="construction contractor builder architect">
+      <div class="jd-icon"><img src="https://cdn-icons-png.flaticon.com/512/3062/3062634.png" alt=""></div>
+      <div class="jd-title">Construction</div>
+    </a>
+
+    <a href="#shopping" class="jd-item" data-name="shopping mall fashion clothing online store">
+      <div class="jd-icon"><img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt=""></div>
+      <div class="jd-title">Shopping</div>
+    </a>
+
+    <a href="#entertainment" class="jd-item" data-name="entertainment movies music events gigs">
+      <div class="jd-icon"><img src="https://cdn-icons-png.flaticon.com/512/2972/2972185.png" alt=""></div>
+      <div class="jd-title">Entertainment</div>
+    </a>
+
+    <a href="#fitness" class="jd-item" data-name="fitness gym yoga personal trainer">
+      <div class="jd-icon"><img src="https://cdn-icons-png.flaticon.com/512/888/888879.png" alt=""></div>
+      <div class="jd-title">Fitness</div>
+    </a>
+
+    <a href="#pets" class="jd-item" data-name="pets veterinary pet food grooming">
+      <div class="jd-icon"><img src="https://cdn-icons-png.flaticon.com/512/194/194279.png" alt=""></div>
+      <div class="jd-title">Pets</div>
+    </a>
+
+    <a href="#repairing" class="jd-item" data-name="repairing service mend fix">
+      <div class="jd-icon"><img src="https://cdn-icons-png.flaticon.com/512/576/576406.png" alt=""></div>
+      <div class="jd-title">Repairing</div>
+    </a>
+
+    <a href="#others" class="jd-item" data-name="others miscellaneous services">
+      <div class="jd-icon"><img src="https://cdn-icons-png.flaticon.com/512/469/469670.png" alt=""></div>
+      <div class="jd-title">Others</div>
+    </a>
   </div>
 </div>
 
-<br>
-<header class="text2"> <img class="text2" src="https://cdn-icons-png.flaticon.com/128/5540/5540319.png" width="35px;"> FURNITURE</header>
-
-<div class="search-box">
-  <input type="text" id="searchInput" placeholder="Search shop name..." onkeyup="searchCards()">
+<!-- ================= PAGES & SUBPAGES ================= -->
+<!-- Emergency -->
+<div id="emergency" class="page">
+  <div class="top-bar">
+    <a href="#home" class="back">←</a>
+    <div class="title">Emergency</div>
+    <div class="info">ℹ</div>
+  </div>
+  <div class="em-grid">
+    <a href="#ambulance" class="em-item">🚑 Ambulance</a>
+    <a href="#police_station" class="em-item">👮 Police Station</a>
+    <a href="#fire_brigade" class="em-item">🔥 Fire Brigade</a>
+    <a href="#hospital_emergency" class="em-item">🏥 Hospital Emergency</a>
+  </div>
 </div>
 
-<div class="container">
-
-  <!-- CARD 1 -->
-  <div class="card">
-    <img src="https://www.urbanwood.in/assets/image/popular-items/dining-set.jpg">
-    <div class="card-content">
-      <div class="card-title"><b>Payal Wooden Furniture</b></div>
-      <div class="card-details">Pandaveswar, Paschim Bardhaman</div>
-    </div>
-    <div class="card-buttons">
-      <a href="tel:9064075546" class="btn call-btn"><ion-icon name="call"></ion-icon>Call</a>
-      <a href="Form.html"
-         class="btn details-btn"
-         onclick="forceReload(this)">
-         <ion-icon name="information-circle"></ion-icon>Details
-      </a>
-    </div>
+<div id="ambulance" class="page">
+  <div class="top-bar"><a href="#emergency" class="back">←</a><div class="title">Ambulance</div></div>
+  <div class="sub-grid">
+    <a class="sub-item link-like" href="tel:102">Ambulance 1 — Call</a>
+    <a class="sub-item link-like" href="tel:108">Ambulance 2 — Call</a>
   </div>
-
-  <!-- CARD 2 -->
-  <div class="card">
-    <img src="https://www.urbanwood.in/assets/image/popular-items/dining-set.jpg">
-    <div class="card-content">
-      <div class="card-title"><b>Kamala Wooden Furniture</b></div>
-      <div class="card-details">Pandaveswar, Paschim Bardhaman</div>
-    </div>
-    <div class="card-buttons">
-      <a href="tel:9064075546" class="btn call-btn"><ion-icon name="call"></ion-icon>Call</a>
-      <a href="https://pnapagetesting.blogspot.com/p/next.html"
-         class="btn details-btn"
-         onclick="forceReload(this)">
-         <ion-icon name="information-circle"></ion-icon>Details
-      </a>
-    </div>
-  </div>
-
-
-  <!-- CARD 3 -->
-  <div class="card">
-    <img src="https://www.urbanwood.in/assets/image/popular-items/dining-set.jpg">
-    <div class="card-content">
-      <div class="card-title"><b>Mondal Wooden Furniture</b></div>
-      <div class="card-details">Pandaveswar, Paschim Bardhaman</div>
-    </div>
-    <div class="card-buttons">
-      <a href="tel:9064075546" class="btn call-btn"><ion-icon name="call"></ion-icon>Call</a>
-      <a href="https://pnapagetesting.blogspot.com/p/next.html"
-         class="btn details-btn"
-         onclick="forceReload(this)">
-         <ion-icon name="information-circle"></ion-icon>Details
-      </a>
-    </div>
-  </div>
-
-
-  <!-- CARD 4 -->
-  <div class="card">
-    <img src="https://www.urbanwood.in/assets/image/popular-items/dining-set.jpg">
-    <div class="card-content">
-      <div class="card-title"><b>Paul Wooden Furniture</b></div>
-      <div class="card-details">Pandaveswar, Paschim Bardhaman</div>
-    </div>
-    <div class="card-buttons">
-      <a href="tel:9064075546" class="btn call-btn"><ion-icon name="call"></ion-icon>Call</a>
-      <a href="https://pnapagetesting.blogspot.com/p/next.html"
-         class="btn details-btn"
-         onclick="forceReload(this)">
-         <ion-icon name="information-circle"></ion-icon>Details
-      </a>
-    </div>
-  </div>
-  
-  
-  <!-- CARD 5 -->
-  <div class="card">
-    <img src="https://www.urbanwood.in/assets/image/popular-items/dining-set.jpg">
-    <div class="card-content">
-      <div class="card-title"><b>Roy Wooden Furniture</b></div>
-      <div class="card-details">Pandaveswar, Paschim Bardhaman</div>
-    </div>
-    <div class="card-buttons">
-      <a href="tel:9064075546" class="btn call-btn"><ion-icon name="call"></ion-icon>Call</a>
-      <a href="https://pnapagetesting.blogspot.com/p/next.html"
-         class="btn details-btn"
-         onclick="forceReload(this)">
-         <ion-icon name="information-circle"></ion-icon>Details
-      </a>
-    </div>
-  </div>
-  
 </div>
 
+<div id="police_station" class="page">
+  <div class="top-bar"><a href="#emergency" class="back">←</a><div class="title">Police Station</div></div>
+  <div class="sub-grid">
+    <div class="sub-item">Police Station 1</div>
+    <div class="sub-item">Police Station 2</div>
+  </div>
+</div>
 
-    <!-- JavaScript File -->
-    <script src="script.js"></script>
+<div id="fire_brigade" class="page">
+  <div class="top-bar"><a href="#emergency" class="back">←</a><div class="title">Fire Brigade</div></div>
+  <div class="sub-grid">
+    <div class="sub-item">Fire Brigade 1</div>
+    <div class="sub-item">Fire Brigade 2</div>
+  </div>
+</div>
+
+<div id="hospital_emergency" class="page">
+  <div class="top-bar"><a href="#emergency" class="back">←</a><div class="title">Hospital Emergency</div></div>
+  <div class="sub-grid">
+    <div class="sub-item">Hospital Emergency 1</div>
+    <div class="sub-item">Hospital Emergency 2</div>
+  </div>
+</div>
+
+<!-- Dr. & Drugs -->
+<div id="dr_and_drugs" class="page">
+  <div class="top-bar"><a href="#home" class="back">←</a><div class="title">Dr. &amp; Drugs</div></div>
+  <div class="em-grid">
+    <a href="#doctors" class="em-item">👨‍⚕️ Doctors</a>
+    <a href="#clinics" class="em-item">🏥 Clinics</a>
+    <a href="#pharmacies" class="em-item">💊 Pharmacies</a>
+    <a href="#blood_banks" class="em-item">🩸 Blood Banks</a>
+  </div>
+</div>
+
+<div id="doctors" class="page">
+  <div class="top-bar"><a href="#dr_and_drugs" class="back">←</a><div class="title">Doctors</div></div>
+  <div class="sub-grid">
+    <div class="sub-item">General Physician</div>
+    <div class="sub-item">Pediatrician</div>
+    <div class="sub-item">Cardiologist</div>
+    <div class="sub-item">Dentist</div>
+  </div>
+</div>
+
+<div id="clinics" class="page">
+  <div class="top-bar"><a href="#dr_and_drugs" class="back">←</a><div class="title">Clinics</div></div>
+  <div class="sub-grid">
+    <div class="sub-item">Clinic 1</div>
+    <div class="sub-item">Clinic 2</div>
+  </div>
+</div>
+
+<div id="pharmacies" class="page">
+  <div class="top-bar"><a href="#dr_and_drugs" class="back">←</a><div class="title">Pharmacies</div></div>
+  <div class="sub-grid">
+    <a class="sub-item link-like" href="tel:+911234567890">24/7 Pharmacy 1 — Call</a>
+    <div class="sub-item">Pharmacy 2</div>
+  </div>
+</div>
+
+<div id="blood_banks" class="page">
+  <div class="top-bar"><a href="#dr_and_drugs" class="back">←</a><div class="title">Blood Banks</div></div>
+  <div class="sub-grid">
+    <div class="sub-item">Blood Bank 1</div>
+    <div class="sub-item">Blood Bank 2</div>
+  </div>
+</div>
+
+<!-- Home Service -->
+<div id="home_service" class="page">
+  <div class="top-bar"><a href="#home" class="back">←</a><div class="title">Home Service</div></div>
+  <div class="em-grid">
+    <a href="#plumbers" class="em-item">🔧 Plumbers</a>
+    <a href="#electricians" class="em-item">⚡ Electricians</a>
+    <a href="#cleaners" class="em-item">🧹 Cleaners</a>
+    <a href="#appliance_repair" class="em-item">🔌 Appliance Repair</a>
+  </div>
+</div>
+
+<div id="plumbers" class="page">
+  <div class="top-bar"><a href="#home_service" class="back">←</a><div class="title">Plumbers</div></div>
+  <div class="sub-grid">
+    <div class="sub-item">Leak Fixing</div>
+    <div class="sub-item">Pipe Installation</div>
+  </div>
+</div>
+
+<div id="electricians" class="page">
+  <div class="top-bar"><a href="#home_service" class="back">←</a><div class="title">Electricians</div></div>
+  <div class="sub-grid">
+    <div class="sub-item">Wiring Repair</div>
+    <div class="sub-item">Switch/Fan Repair</div>
+  </div>
+</div>
+
+<div id="cleaners" class="page">
+  <div class="top-bar"><a href="#home_service" class="back">←</a><div class="title">Cleaners</div></div>
+  <div class="sub-grid">
+    <div class="sub-item">Full Home Clean</div>
+    <div class="sub-item">Sofa/Carpet Clean</div>
+  </div>
+</div>
+
+<div id="appliance_repair" class="page">
+  <div class="top-bar"><a href="#home_service" class="back">←</a><div class="title">Appliance Repair</div></div>
+  <div class="sub-grid">
+    <div class="sub-item">Refrigerator Repair</div>
+    <div class="sub-item">Washing Machine Repair</div>
+  </div>
+</div>
+
+<!-- Find My Shop -->
+<div id="find_my_shop" class="page">
+  <div class="top-bar"><a href="#home" class="back">←</a><div class="title">Find My Shop</div></div>
+  <div class="em-grid">
+    <a href="#local_shops" class="em-item">🏬 Local Shops</a>
+    <a href="#showrooms" class="em-item">🏢 Showrooms</a>
+    <a href="#marketplaces" class="em-item">🛍 Marketplaces</a>
+    <a href="#vendors" class="em-item">👨‍🌾 Vendors</a>
+  </div>
+</div>
+
+<div id="local_shops" class="page">
+  <div class="top-bar"><a href="#find_my_shop" class="back">←</a><div class="title">Local Shops</div></div>
+  <div class="sub-grid"><div class="sub-item">Shop 1</div><div class="sub-item">Shop 2</div></div>
+</div>
+
+<div id="showrooms" class="page">
+  <div class="top-bar"><a href="#find_my_shop" class="back">←</a><div class="title">Showrooms</div></div>
+  <div class="sub-grid"><div class="sub-item">Showroom 1</div><div class="sub-item">Showroom 2</div></div>
+</div>
+
+<div id="marketplaces" class="page">
+  <div class="top-bar"><a href="#find_my_shop" class="back">←</a><div class="title">Marketplaces</div></div>
+  <div class="sub-grid"><div class="sub-item">Market 1</div><div class="sub-item">Market 2</div></div>
+</div>
+
+<div id="vendors" class="page">
+  <div class="top-bar"><a href="#find_my_shop" class="back">←</a><div class="title">Vendors</div></div>
+  <div class="sub-grid"><div class="sub-item">Vendor 1</div><div class="sub-item">Vendor 2</div></div>
+</div>
+
+<!-- Beauty -->
+<div id="beauty" class="page">
+  <div class="top-bar"><a href="#home" class="back">←</a><div class="title">Beauty</div></div>
+  <div class="em-grid">
+    <a href="#women_salon" class="em-item">💄 Women Salon</a>
+    <a href="#men_salon" class="em-item">💈 Men Salon</a>
+    <a href="#bridal_makeup" class="em-item">👰 Bridal Makeup</a>
+    <a href="#spa_wellness" class="em-item">💆 Spa & Wellness</a>
+  </div>
+</div>
+
+<div id="women_salon" class="page">
+  <div class="top-bar"><a href="#beauty" class="back">←</a><div class="title">Women Salon</div></div>
+  <div class="sub-grid"><div class="sub-item">Beauty Parlour</div><div class="sub-item">Beauty Clinic</div></div>
+</div>
+
+<div id="men_salon" class="page">
+  <div class="top-bar"><a href="#beauty" class="back">←</a><div class="title">Men Salon</div></div>
+  <div class="sub-grid"><div class="sub-item">Men Haircut</div><div class="sub-item">Men Grooming</div></div>
+</div>
+
+<div id="bridal_makeup" class="page">
+  <div class="top-bar"><a href="#beauty" class="back">←</a><div class="title">Bridal Makeup</div></div>
+  <div class="sub-grid"><div class="sub-item">Bridal Artist 1</div><div class="sub-item">Bridal Artist 2</div></div>
+</div>
+
+<div id="spa_wellness" class="page">
+  <div class="top-bar"><a href="#beauty" class="back">←</a><div class="title">Spa & Wellness</div></div>
+  <div class="sub-grid"><div class="sub-item">Relaxing Massage</div><div class="sub-item">Therapy</div></div>
+</div>
+
+<!-- Automobile -->
+<div id="automobile" class="page">
+  <div class="top-bar"><a href="#home" class="back">←</a><div class="title">Automobile</div></div>
+  <div class="em-grid">
+    <a href="#car_dealers" class="em-item">🚗 Car Dealers</a>
+    <a href="#bike_dealers" class="em-item">🏍 Bike Dealers</a>
+    <a href="#garages" class="em-item">🔧 Garages</a>
+    <a href="#car_rentals" class="em-item">🚘 Car Rentals</a>
+  </div>
+</div>
+
+<div id="car_dealers" class="page">
+  <div class="top-bar"><a href="#automobile" class="back">←</a><div class="title">Car Dealers</div></div>
+  <div class="sub-grid"><div class="sub-item">Dealer 1</div><div class="sub-item">Dealer 2</div></div>
+</div>
+
+<div id="bike_dealers" class="page">
+  <div class="top-bar"><a href="#automobile" class="back">←</a><div class="title">Bike Dealers</div></div>
+  <div class="sub-grid"><div class="sub-item">Bike Dealer 1</div><div class="sub-item">Bike Dealer 2</div></div>
+</div>
+
+<div id="garages" class="page">
+  <div class="top-bar"><a href="#automobile" class="back">←</a><div class="title">Garages</div></div>
+  <div class="sub-grid"><div class="sub-item">Garage 1</div><div class="sub-item">Garage 2</div></div>
+</div>
+
+<div id="car_rentals" class="page">
+  <div class="top-bar"><a href="#automobile" class="back">←</a><div class="title">Car Rentals</div></div>
+  <div class="sub-grid"><div class="sub-item">Rental 1</div><div class="sub-item">Rental 2</div></div>
+</div>
+
+<!-- Appliances -->
+<div id="appliances" class="page">
+  <div class="top-bar"><a href="#home" class="back">←</a><div class="title">Appliances</div></div>
+  <div class="em-grid">
+    <a href="#fridges" class="em-item">🧊 Refrigerators</a>
+    <a href="#washing_machines" class="em-item">🧺 Washing Machines</a>
+    <a href="#ac_services" class="em-item">❄️ AC Service</a>
+    <a href="#tv_services" class="em-item">📺 TV Repair</a>
+  </div>
+</div>
+
+<div id="fridges" class="page">
+  <div class="top-bar"><a href="#appliances" class="back">←</a><div class="title">Refrigerators</div></div>
+  <div class="sub-grid"><div class="sub-item">Fridge Repair 1</div><div class="sub-item">Fridge Repair 2</div></div>
+</div>
+
+<div id="washing_machines" class="page">
+  <div class="top-bar"><a href="#appliances" class="back">←</a><div class="title">Washing Machines</div></div>
+  <div class="sub-grid"><div class="sub-item">WM Repair 1</div><div class="sub-item">WM Repair 2</div></div>
+</div>
+
+<div id="ac_services" class="page">
+  <div class="top-bar"><a href="#appliances" class="back">←</a><div class="title">AC Service</div></div>
+  <div class="sub-grid"><div class="sub-item">AC Service 1</div><div class="sub-item">AC Service 2</div></div>
+</div>
+
+<div id="tv_services" class="page">
+  <div class="top-bar"><a href="#appliances" class="back">←</a><div class="title">TV Repair</div></div>
+  <div class="sub-grid"><div class="sub-item">TV Repair 1</div><div class="sub-item">TV Repair 2</div></div>
+</div>
+
+<!-- Food -->
+<div id="food" class="page">
+  <div class="top-bar"><a href="#home" class="back">←</a><div class="title">Food</div></div>
+  <div class="em-grid">
+    <a href="#restaurants" class="em-item">🍽 Restaurants</a>
+    <a href="#delivery" class="em-item">🏍 Delivery</a>
+    <a href="#cafes" class="em-item">☕ Cafes</a>
+    <a href="#bakeries" class="em-item">🧁 Bakeries</a>
+  </div>
+</div>
+
+<div id="restaurants" class="page">
+  <div class="top-bar"><a href="#food" class="back">←</a><div class="title">Restaurants</div></div>
+  <div class="sub-grid"><div class="sub-item">Restaurant 1</div><div class="sub-item">Restaurant 2</div></div>
+</div>
+
+<div id="delivery" class="page">
+  <div class="top-bar"><a href="#food" class="back">←</a><div class="title">Delivery</div></div>
+  <div class="sub-grid"><div class="sub-item">Delivery Partner 1</div><div class="sub-item">Delivery Partner 2</div></div>
+</div>
+
+<div id="cafes" class="page">
+  <div class="top-bar"><a href="#food" class="back">←</a><div class="title">Cafes</div></div>
+  <div class="sub-grid"><div class="sub-item">Cafe 1</div><div class="sub-item">Cafe 2</div></div>
+</div>
+
+<div id="bakeries" class="page">
+  <div class="top-bar"><a href="#food" class="back">←</a><div class="title">Bakeries</div></div>
+  <div class="sub-grid"><div class="sub-item">Bakery 1</div><div class="sub-item">Bakery 2</div></div>
+</div>
+
+<!-- Education -->
+<div id="education" class="page">
+  <div class="top-bar"><a href="#home" class="back">←</a><div class="title">Education</div></div>
+  <div class="em-grid">
+    <a href="#schools" class="em-item">🏫 Schools</a>
+    <a href="#coaching" class="em-item">📚 Coaching</a>
+    <a href="#tutors" class="em-item">👩‍🏫 Tutors</a>
+    <a href="#colleges" class="em-item">🎓 Colleges</a>
+  </div>
+</div>
+
+<div id="schools" class="page">
+  <div class="top-bar"><a href="#education" class="back">←</a><div class="title">Schools</div></div>
+  <div class="sub-grid"><div class="sub-item">School 1</div><div class="sub-item">School 2</div></div>
+</div>
+
+<div id="coaching" class="page">
+  <div class="top-bar"><a href="#education" class="back">←</a><div class="title">Coaching</div></div>
+  <div class="sub-grid"><div class="sub-item">Coaching 1</div><div class="sub-item">Coaching 2</div></div>
+</div>
+
+<div id="tutors" class="page">
+  <div class="top-bar"><a href="#education" class="back">←</a><div class="title">Tutors</div></div>
+  <div class="sub-grid"><div class="sub-item">Tutor 1</div><div class="sub-item">Tutor 2</div></div>
+</div>
+
+<div id="colleges" class="page">
+  <div class="top-bar"><a href="#education" class="back">←</a><div class="title">Colleges</div></div>
+  <div class="sub-grid"><div class="sub-item">College 1</div><div class="sub-item">College 2</div></div>
+</div>
+
+<!-- Business -->
+<div id="business" class="page">
+  <div class="top-bar"><a href="#home" class="back">←</a><div class="title">Business</div></div>
+  <div class="em-grid">
+    <a href="#consulting" class="em-item">💼 Consulting</a>
+    <a href="#services" class="em-item">🧾 Services</a>
+    <a href="#suppliers" class="em-item">📦 Suppliers</a>
+    <a href="#startups" class="em-item">🚀 Startups</a>
+  </div>
+</div>
+
+<div id="consulting" class="page">
+  <div class="top-bar"><a href="#business" class="back">←</a><div class="title">Consulting</div></div>
+  <div class="sub-grid"><div class="sub-item">Consultant 1</div><div class="sub-item">Consultant 2</div></div>
+</div>
+
+<div id="services" class="page">
+  <div class="top-bar"><a href="#business" class="back">←</a><div class="title">Services</div></div>
+  <div class="sub-grid"><div class="sub-item">Service 1</div><div class="sub-item">Service 2</div></div>
+</div>
+
+<div id="suppliers" class="page">
+  <div class="top-bar"><a href="#business" class="back">←</a><div class="title">Suppliers</div></div>
+  <div class="sub-grid"><div class="sub-item">Supplier 1</div><div class="sub-item">Supplier 2</div></div>
+</div>
+
+<div id="startups" class="page">
+  <div class="top-bar"><a href="#business" class="back">←</a><div class="title">Startups</div></div>
+  <div class="sub-grid"><div class="sub-item">Startup 1</div><div class="sub-item">Startup 2</div></div>
+</div>
+
+<!-- Electronics -->
+<div id="electronics" class="page">
+  <div class="top-bar"><a href="#home" class="back">←</a><div class="title">Electronics</div></div>
+  <div class="em-grid">
+    <a href="#mobile_shops" class="em-item">📱 Mobile Shops</a>
+    <a href="#laptop_shops" class="em-item">💻 Laptop Shops</a>
+    <a href="#accessories" class="em-item">🔌 Accessories</a>
+    <a href="#repair_centers" class="em-item">🛠 Repair Centers</a>
+  </div>
+</div>
+
+<div id="mobile_shops" class="page"><div class="top-bar"><a href="#electronics" class="back">←</a><div class="title">Mobile Shops</div></div><div class="sub-grid"><div class="sub-item">Mobile Shop 1</div><div class="sub-item">Mobile Shop 2</div></div></div>
+<div id="laptop_shops" class="page"><div class="top-bar"><a href="#electronics" class="back">←</a><div class="title">Laptop Shops</div></div><div class="sub-grid"><div class="sub-item">Laptop Shop 1</div><div class="sub-item">Laptop Shop 2</div></div></div>
+<div id="accessories" class="page"><div class="top-bar"><a href="#electronics" class="back">←</a><div class="title">Accessories</div></div><div class="sub-grid"><div class="sub-item">Accessory Shop 1</div><div class="sub-item">Accessory Shop 2</div></div></div>
+<div id="repair_centers" class="page"><div class="top-bar"><a href="#electronics" class="back">←</a><div class="title">Repair Centers</div></div><div class="sub-grid"><div class="sub-item">Repair Center 1</div><div class="sub-item">Repair Center 2</div></div></div>
+
+<!-- Travel -->
+<div id="travel" class="page">
+  <div class="top-bar"><a href="#home" class="back">←</a><div class="title">Travel</div></div>
+  <div class="em-grid">
+    <a href="#tickets" class="em-item">✈️ Tickets</a>
+    <a href="#hotels" class="em-item">🏨 Hotels</a>
+    <a href="#tours" class="em-item">🗺 Tours</a>
+    <a href="#transport" class="em-item">🚌 Local Transport</a>
+  </div>
+</div>
+
+<div id="tickets" class="page"><div class="top-bar"><a href="#travel" class="back">←</a><div class="title">Tickets</div></div><div class="sub-grid"><div class="sub-item">Air Ticket 1</div><div class="sub-item">Train Ticket 1</div></div></div>
+<div id="hotels" class="page"><div class="top-bar"><a href="#travel" class="back">←</a><div class="title">Hotels</div></div><div class="sub-grid"><div class="sub-item">Hotel 1</div><div class="sub-item">Hotel 2</div></div></div>
+<div id="tours" class="page"><div class="top-bar"><a href="#travel" class="back">←</a><div class="title">Tours</div></div><div class="sub-grid"><div class="sub-item">Tour 1</div><div class="sub-item">Tour 2</div></div></div>
+<div id="transport" class="page"><div class="top-bar"><a href="#travel" class="back">←</a><div class="title">Local Transport</div></div><div class="sub-grid"><div class="sub-item">Taxi</div><div class="sub-item">Bus</div></div></div>
+
+<!-- Finance -->
+<div id="finance" class="page">
+  <div class="top-bar"><a href="#home" class="back">←</a><div class="title">Finance</div></div>
+  <div class="em-grid">
+    <a href="#banks" class="em-item">🏦 Banks</a>
+    <a href="#loans" class="em-item">💳 Loans</a>
+    <a href="#insurance" class="em-item">🛡 Insurance</a>
+    <a href="#accountants" class="em-item">📊 Accountants</a>
+  </div>
+</div>
+
+<div id="banks" class="page"><div class="top-bar"><a href="#finance" class="back">←</a><div class="title">Banks</div></div><div class="sub-grid"><div class="sub-item">Bank 1</div><div class="sub-item">Bank 2</div></div></div>
+<div id="loans" class="page"><div class="top-bar"><a href="#finance" class="back">←</a><div class="title">Loans</div></div><div class="sub-grid"><div class="sub-item">Loan Service 1</div><div class="sub-item">Loan Service 2</div></div></div>
+<div id="insurance" class="page"><div class="top-bar"><a href="#finance" class="back">←</a><div class="title">Insurance</div></div><div class="sub-grid"><div class="sub-item">Insurance 1</div><div class="sub-item">Insurance 2</div></div></div>
+<div id="accountants" class="page"><div class="top-bar"><a href="#finance" class="back">←</a><div class="title">Accountants</div></div><div class="sub-grid"><div class="sub-item">Accountant 1</div><div class="sub-item">Accountant 2</div></div></div>
+
+<!-- Construction -->
+<div id="construction" class="page">
+  <div class="top-bar"><a href="#home" class="back">←</a><div class="title">Construction</div></div>
+  <div class="em-grid">
+    <a href="#contractors" class="em-item">🏗 Contractors</a>
+    <a href="#architects" class="em-item">📐 Architects</a>
+    <a href="#materials" class="em-item">🧱 Materials</a>
+    <a href="#interiors" class="em-item">🛋 Interiors</a>
+  </div>
+</div>
+
+<div id="contractors" class="page"><div class="top-bar"><a href="#construction" class="back">←</a><div class="title">Contractors</div></div><div class="sub-grid"><div class="sub-item">Contractor 1</div><div class="sub-item">Contractor 2</div></div></div>
+<div id="architects" class="page"><div class="top-bar"><a href="#construction" class="back">←</a><div class="title">Architects</div></div><div class="sub-grid"><div class="sub-item">Architect 1</div><div class="sub-item">Architect 2</div></div></div>
+<div id="materials" class="page"><div class="top-bar"><a href="#construction" class="back">←</a><div class="title">Materials</div></div><div class="sub-grid"><div class="sub-item">Material Shop 1</div><div class="sub-item">Material Shop 2</div></div></div>
+<div id="interiors" class="page"><div class="top-bar"><a href="#construction" class="back">←</a><div class="title">Interiors</div></div><div class="sub-grid"><div class="sub-item">Interior 1</div><div class="sub-item">Interior 2</div></div></div>
+
+<!-- Shopping -->
+<div id="shopping" class="page">
+  <div class="top-bar"><a href="#home" class="back">←</a><div class="title">Shopping</div></div>
+  <div class="em-grid">
+    <a href="#malls" class="em-item">🛒 Malls</a>
+    <a href="#fashion" class="em-item">👗 Fashion</a>
+    <a href="#grocery" class="em-item">🧾 Grocery</a>
+    <a href="#online" class="em-item">📦 Online Stores</a>
+  </div>
+</div>
+
+<div id="malls" class="page"><div class="top-bar"><a href="#shopping" class="back">←</a><div class="title">Malls</div></div><div class="sub-grid"><div class="sub-item">Mall 1</div><div class="sub-item">Mall 2</div></div></div>
+<div id="fashion" class="page"><div class="top-bar"><a href="#shopping" class="back">←</a><div class="title">Fashion</div></div><div class="sub-grid"><div class="sub-item">Fashion Store 1</div><div class="sub-item">Fashion Store 2</div></div></div>
+<div id="grocery" class="page"><div class="top-bar"><a href="#shopping" class="back">←</a><div class="title">Grocery</div></div><div class="sub-grid"><div class="sub-item">Grocery 1</div><div class="sub-item">Grocery 2</div></div></div>
+<div id="online" class="page"><div class="top-bar"><a href="#shopping" class="back">←</a><div class="title">Online Stores</div></div><div class="sub-grid"><div class="sub-item">Online 1</div><div class="sub-item">Online 2</div></div></div>
+
+<!-- Entertainment -->
+<div id="entertainment" class="page">
+  <div class="top-bar"><a href="#home" class="back">←</a><div class="title">Entertainment</div></div>
+  <div class="em-grid">
+    <a href="#movies" class="em-item">🎬 Movies</a>
+    <a href="#music" class="em-item">🎵 Music</a>
+    <a href="#events" class="em-item">🎟 Events</a>
+    <a href="#clubs" class="em-item">🕺 Clubs</a>
+  </div>
+</div>
+
+<div id="movies" class="page"><div class="top-bar"><a href="#entertainment" class="back">←</a><div class="title">Movies</div></div><div class="sub-grid"><div class="sub-item">Cinema 1</div><div class="sub-item">Cinema 2</div></div></div>
+<div id="music" class="page"><div class="top-bar"><a href="#entertainment" class="back">←</a><div class="title">Music</div></div><div class="sub-grid"><div class="sub-item">Music School 1</div><div class="sub-item">Music School 2</div></div></div>
+<div id="events" class="page"><div class="top-bar"><a href="#entertainment" class="back">←</a><div class="title">Events</div></div><div class="sub-grid"><div class="sub-item">Event Organizer 1</div><div class="sub-item">Event Organizer 2</div></div></div>
+<div id="clubs" class="page"><div class="top-bar"><a href="#entertainment" class="back">←</a><div class="title">Clubs</div></div><div class="sub-grid"><div class="sub-item">Club 1</div><div class="sub-item">Club 2</div></div></div>
+
+<!-- Fitness -->
+<div id="fitness" class="page">
+  <div class="top-bar"><a href="#home" class="back">←</a><div class="title">Fitness</div></div>
+  <div class="em-grid">
+    <a href="#gyms" class="em-item">🏋️ Gyms</a>
+    <a href="#yoga" class="em-item">🧘 Yoga</a>
+    <a href="#trainers" class="em-item">💪 Personal Trainers</a>
+    <a href="#classes" class="em-item">📅 Classes</a>
+  </div>
+</div>
+
+<div id="gyms" class="page"><div class="top-bar"><a href="#fitness" class="back">←</a><div class="title">Gyms</div></div><div class="sub-grid"><div class="sub-item">Gym 1</div><div class="sub-item">Gym 2</div></div></div>
+<div id="yoga" class="page"><div class="top-bar"><a href="#fitness" class="back">←</a><div class="title">Yoga</div></div><div class="sub-grid"><div class="sub-item">Yoga Center 1</div><div class="sub-item">Yoga Center 2</div></div></div>
+<div id="trainers" class="page"><div class="top-bar"><a href="#fitness" class="back">←</a><div class="title">Personal Trainers</div></div><div class="sub-grid"><div class="sub-item">Trainer 1</div><div class="sub-item">Trainer 2</div></div></div>
+<div id="classes" class="page"><div class="top-bar"><a href="#fitness" class="back">←</a><div class="title">Classes</div></div><div class="sub-grid"><div class="sub-item">Class 1</div><div class="sub-item">Class 2</div></div></div>
+
+<!-- Pets -->
+<div id="pets" class="page">
+  <div class="top-bar"><a href="#home" class="back">←</a><div class="title">Pets</div></div>
+  <div class="em-grid">
+    <a href="#vets" class="em-item">🐾 Vets</a>
+    <a href="#pet_shops" class="em-item">🛒 Pet Shops</a>
+    <a href="#grooming" class="em-item">✂️ Grooming</a>
+    <a href="#boarding" class="em-item">🏨 Boarding</a>
+  </div>
+</div>
+
+<div id="vets" class="page"><div class="top-bar"><a href="#pets" class="back">←</a><div class="title">Vets</div></div><div class="sub-grid"><div class="sub-item">Vet 1</div><div class="sub-item">Vet 2</div></div></div>
+<div id="pet_shops" class="page"><div class="top-bar"><a href="#pets" class="back">←</a><div class="title">Pet Shops</div></div><div class="sub-grid"><div class="sub-item">Pet Shop 1</div><div class="sub-item">Pet Shop 2</div></div></div>
+<div id="grooming" class="page"><div class="top-bar"><a href="#pets" class="back">←</a><div class="title">Grooming</div></div><div class="sub-grid"><div class="sub-item">Groomer 1</div><div class="sub-item">Groomer 2</div></div></div>
+<div id="boarding" class="page"><div class="top-bar"><a href="#pets" class="back">←</a><div class="title">Boarding</div></div><div class="sub-grid"><div class="sub-item">Boarding 1</div><div class="sub-item">Boarding 2</div></div></div>
+
+<!-- Repairing -->
+<div id="repairing" class="page">
+  <div class="top-bar"><a href="#home" class="back">←</a><div class="title">Repairing</div></div>
+  <div class="em-grid">
+    <a href="#phone_repair" class="em-item">📱 Phone Repair</a>
+    <a href="#watch_repair" class="em-item">⌚ Watch Repair</a>
+    <a href="#shoe_repair" class="em-item">👞 Shoe Repair</a>
+    <a href="#furniture_repair" class="em-item">🛠 Furniture Repair</a>
+  </div>
+</div>
+
+<div id="phone_repair" class="page"><div class="top-bar"><a href="#repairing" class="back">←</a><div class="title">Phone Repair</div></div><div class="sub-grid"><div class="sub-item">Phone Repair 1</div><div class="sub-item">Phone Repair 2</div></div></div>
+<div id="watch_repair" class="page"><div class="top-bar"><a href="#repairing" class="back">←</a><div class="title">Watch Repair</div></div><div class="sub-grid"><div class="sub-item">Watch Repair 1</div><div class="sub-item">Watch Repair 2</div></div></div>
+<div id="shoe_repair" class="page"><div class="top-bar"><a href="#repairing" class="back">←</a><div class="title">Shoe Repair</div></div><div class="sub-grid"><div class="sub-item">Shoe Repair 1</div><div class="sub-item">Shoe Repair 2</div></div></div>
+<div id="furniture_repair" class="page"><div class="top-bar"><a href="#repairing" class="back">←</a><div class="title">Furniture Repair</div></div><div class="sub-grid"><div class="sub-item">Furniture Repair 1</div><div class="sub-item">Furniture Repair 2</div></div></div>
+
+<!-- Others -->
+<div id="others" class="page">
+  <div class="top-bar"><a href="#home" class="back">←</a><div class="title">Others</div></div>
+  <div class="center-note">Miscellaneous services — add categories as you need.</div>
+  <div class="sub-grid">
+    <div class="sub-item">Service A</div>
+    <div class="sub-item">Service B</div>
+  </div>
+</div>
+
+<!-- ================= SCRIPTS ================= -->
+<script>
+  // Elements
+  const searchInput = document.getElementById('searchInput');
+  const clearBtn = document.getElementById('clearBtn');
+  const menuItems = document.querySelectorAll('#menuList .jd-item');
+
+  // Filter main menu
+  searchInput.addEventListener('input', ()=> {
+    const txt = (searchInput.value || '').toLowerCase().trim();
+    clearBtn.style.display = txt.length ? 'block' : 'none';
+    menuItems.forEach(it=>{
+      const name = (it.dataset.name||'').toLowerCase();
+      it.style.display = name.includes(txt) ? '' : 'none';
+    });
+    if(!txt) menuItems.forEach(i=>i.style.display='');
+  });
+
+  clearBtn.addEventListener('click', ()=>{
+    searchInput.value = '';
+    clearBtn.style.display = 'none';
+    menuItems.forEach(i=>i.style.display='');
+    searchInput.focus();
+  });
+
+  // placeholder animation when not focused
+  const placeholders = [
+    "Search Emergency","Search Dr. & Drugs","Search Home Service","Search Find My Shop",
+    "Search Beauty","Search Automobile","Search Appliances","Search Food",
+    "Search Education","Search Business","Search Electronics","Search Travel",
+    "Search Finance","Search Construction","Search Shopping","Search Entertainment",
+    "Search Fitness","Search Pets","Search Repairing","Search Others"
+  ];
+  let ph = 0;
+  setInterval(()=> {
+    if(document.activeElement && document.activeElement.id==='searchInput') return;
+    searchInput.placeholder = placeholders[ph];
+    ph = (ph+1)%placeholders.length;
+  }, 1500);
+</script>
+
 </body>
 </html>
-
